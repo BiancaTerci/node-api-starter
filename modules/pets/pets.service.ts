@@ -12,6 +12,7 @@ export default class PetsService {
     
     public static async getPetById(petId: string): Promise<ControllerResponse<PetModel | ControllerError>> {
         const pet = await PetsDal.getPetById(petId)
+
         if (!pet) {
             return ResponseFactory.createNotFoundError()
         }
@@ -51,9 +52,8 @@ export default class PetsService {
     public static async deletePetById(petId: string): Promise<ControllerResponse<PetModel | ControllerError>> {
         if(!ObjectId.isValid(petId)){
 
-            return ResponseFactory.createBadRequestError("Invalid id for pet!")
+            return ResponseFactory.createBadRequestError("Invalid id!")
         }
-
         const pet= await PetsDal.deletePet(petId);
         if (!pet) {
             return ResponseFactory.createNotFoundError()
