@@ -3,6 +3,7 @@ import PetsDal from './pets.dal'
 import { NewPet, Species, PetModel, LoginPet } from './pets.models'
 import { ControllerError, ControllerResponse, ResponseFactory } from '../../toolkit'
 import bcrypt from 'bcrypt'
+import {ObjectId} from 'mongodb'
 export default class PetsService {
     public static async getPetsList(): Promise<ControllerResponse<PetModel[] | ControllerError>> {
         const pets = await PetsDal.getPetsList()
@@ -11,6 +12,7 @@ export default class PetsService {
     
     public static async getPetById(petId: string): Promise<ControllerResponse<PetModel | ControllerError>> {
         const pet = await PetsDal.getPetById(petId)
+
         if (!pet) {
             return ResponseFactory.createNotFoundError()
         }
@@ -48,6 +50,9 @@ export default class PetsService {
     }
 
     public static async deletePetById(petId: string): Promise<ControllerResponse<PetModel | ControllerError>> {
+        if(!ObjectId.isValid(petId)){
+            return ResponseFactory.createBadRequestError("Invalid id!")
+        }
         const pet= await PetsDal.deletePet(petId);
         if (!pet) {
             return ResponseFactory.createNotFoundError()
