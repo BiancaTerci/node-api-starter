@@ -38,6 +38,7 @@ router.put('/', async (req: Request, res: Response) => {
     res.status(statusCode).send(body)
   })
 
+// logs in a pet based on name and password
 router.post('/login',async (req:Request,res:Response)=>{
   const { statusCode, body } = await PetsController.loginPet(req, req.body)
     res.status(statusCode).send(body)
