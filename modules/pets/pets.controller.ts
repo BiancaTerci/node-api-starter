@@ -1,5 +1,5 @@
 
-import { Request, Response, Tags, Route, Get, Post, Body, Path, Delete, Put } from 'tsoa'
+import { Request, Response, Tags, Route, Get, Post, Body, Path, Delete, Put, Query } from 'tsoa'
 import { Request as ExpressRequest } from 'express'
 import {
   ControllerResponse,
@@ -21,6 +21,15 @@ export default class PetsController {
     @Request() _request: ExpressRequest
   ): Promise<ControllerResponse<PetModel[] | ControllerError>> {
     return await PetsService.getPetsList()
+  }
+
+  @Get('/filter')
+  @Response<{ message: ErrorMessageCode.INTERNAL_SERVER_ERROR }>(500, 'Server Error')
+  public static async getPetsUnderAge(
+    @Request() _request: ExpressRequest,
+    @Query() age: number
+  ): Promise<ControllerResponse<PetModel[] | ControllerError>> {
+    return await PetsService.getPetsUnderAge(age)
   }
 
   

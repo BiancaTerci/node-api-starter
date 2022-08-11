@@ -7,6 +7,13 @@ router.get('/', async (req: Request, res: Response) => {
   res.status(statusCode).send(body)
 })
 
+//underAge pets
+router.get('/filter', async (req: Request, res: Response) => {
+  const {age}=req.query;
+  const { statusCode, body } = await PetsController.getPetsUnderAge(req,Number(age))
+  res.status(statusCode).send(body)
+})
+
 
 router.get('/:petId', async (req: Request, res: Response) => {
   const { petId } = req.params

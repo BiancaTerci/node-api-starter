@@ -8,6 +8,11 @@ export default class PetsService {
         const pets = await PetsDal.getPetsList()
         return ResponseFactory.createResponse(pets)
     }
+
+    public static async getPetsUnderAge(age:number): Promise<ControllerResponse<PetModel[] | ControllerError>> {
+        const pets = await PetsDal.getPetsUnderAge(age);
+        return ResponseFactory.createResponse(pets)
+    }
     
     public static async getPetById(petId: string): Promise<ControllerResponse<PetModel | ControllerError>> {
         const pet = await PetsDal.getPetById(petId)
