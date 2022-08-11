@@ -70,6 +70,11 @@ export default class PetsDal {
     return pet;
   }
 
+  public static async getPetsUnderAge(age:number): Promise<PetModel[]>{
+    let pets:PetModel[]=await db.collection('pets').find({ age:{$lt:age}}).toArray() as unknown as PetModel[]
+    return pets;
+  }
+
 /*
   public static getPetById(petId: string): PetModel | null {
     return Pets.find((pet) => pet.id === petId) || null;
